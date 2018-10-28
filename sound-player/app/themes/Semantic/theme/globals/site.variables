@@ -1,0 +1,35 @@
+/*******************************
+     User Global Variables
+*******************************/
+
+/*-------------------
+       Fonts
+--------------------*/
+
+@fontName          : 'Helvetica';
+@fontSmoothing     : antialiased;
+
+@headerFont        : Helvetica, sans-serif;
+@pageFont          : Helvetica, sans-serif;
+
+@bold              : bold;
+@normal            : normal;
+
+
+/*-------------------
+        Page
+--------------------*/
+
+@textColor           : #a9a9a9;
+
+
+/*-------------------
+    Brand Colors
+--------------------*/
+
+@primaryColor        : #282828;
+@secondaryColor      : #04ba4f;
+
+@lightPrimaryColor   : #282828;
+@lightSecondaryColor : #04ba4f;
+
