@@ -10,7 +10,6 @@
  */
 
 import React from 'react';
-import { Container } from 'semantic-ui-react';
 import MainPlayer from '../MainPlayer';
 /* eslint-disable react/prefer-stateless-function */
 export default class HomePage extends React.PureComponent {
