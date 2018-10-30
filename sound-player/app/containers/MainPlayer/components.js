@@ -78,6 +78,7 @@ export const PlayerButtons = styled.div`
 `;
 
 export const Time = styled.div`
+  position: relative;
   height: 8px;
   width: 100%;
   overflow: hidden;
@@ -140,8 +141,24 @@ export const NumberTrack = styled.div`
 
 export const LineTrack = styled.div`
   display: flex;
+  position: absolute;
   width: ${props => props.track};
   background-color: ${props => props.theme.secondaryColor};
   height: 8px;
   transition: width 100ms ease-in-out;
+`;
+
+export const MouseTrack = styled.div`
+  display: flex;
+  position: absolute;
+  height: 8px;
+  width: ${props => props.mouse};
+  z-index: 115;
+  background-color: white;
+  opacity: 0.7;
+  &:hover {
+    background-color: white;
+    opacity: 0.7;
+    transition: width 100ms ease-in-out;
+  }
 `;

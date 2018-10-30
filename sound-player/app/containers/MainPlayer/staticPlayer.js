@@ -23,6 +23,7 @@ export class StaticPlayer extends React.Component {
     actSong: 0,
     currentTime: 0,
     width: 0,
+    mouseTime: 0,
   };
 
   albums = [
@@ -131,8 +132,17 @@ export class StaticPlayer extends React.Component {
     });
   };
 
+  mouseTime = width => {
+    const { actSong } = this.state;
+    const song = this.trackUrl[actSong];
+    const mouseTime = (width * song.duration) / 100;
+    this.setState({
+      mouseTime,
+    });
+  };
+
   render() {
-    const { actSong, listening, currentTime, width } = this.state;
+    const { actSong, listening, currentTime, width, mouseTime } = this.state;
     const name = this.trackNames[actSong];
     const album = this.albums[actSong];
     const audio = this.trackUrl[actSong];
@@ -151,6 +161,8 @@ export class StaticPlayer extends React.Component {
           width={width}
           moveLineTrack={this.moveLineTrack}
           height={bottomDynamic}
+          getMouseTime={this.mouseTime}
+          mouseTime={mouseTime}
         />
         <Container>
           <AlbumArt animation={rotate} top={topAlbum}>
