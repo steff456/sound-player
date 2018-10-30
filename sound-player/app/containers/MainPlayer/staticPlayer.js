@@ -113,11 +113,21 @@ export class StaticPlayer extends React.Component {
     song.addEventListener('timeupdate', () => {
       const { currentTime, duration } = song;
       const width = this.widthLineTrack(currentTime, duration);
-      console.log(width);
       this.setState({
         currentTime,
         width,
       });
+    });
+  };
+
+  moveLineTrack = width => {
+    const { actSong } = this.state;
+    const song = this.trackUrl[actSong];
+    const currentTime = (width * song.duration) / 100;
+    song.currentTime = currentTime;
+    this.setState({
+      width,
+      currentTime,
     });
   };
 
@@ -135,6 +145,7 @@ export class StaticPlayer extends React.Component {
             audio={audio}
             currentTime={currentTime}
             width={width}
+            moveLineTrack={this.moveLineTrack}
           />
         )}
         <Container>

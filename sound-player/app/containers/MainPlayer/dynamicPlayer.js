@@ -19,12 +19,18 @@ import {
 
 /* eslint-disable react/prefer-stateless-function */
 export class DynamicPlayer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.timeline = React.createRef();
+  }
+
   static propTypes = {
     songName: PropTypes.string.isRequired,
     albumName: PropTypes.string.isRequired,
     audio: PropTypes.object.isRequired,
     currentTime: PropTypes.number,
     width: PropTypes.number,
+    moveLineTrack: PropTypes.func.isRequired,
   };
 
   formatTime = timeSec => {
@@ -42,6 +48,16 @@ export class DynamicPlayer extends React.Component {
     return `${min}:${sec}`;
   };
 
+  handleClick = e => {
+    const timelineWidth = this.timeline.current.offsetWidth;
+    const handleLeft = e.pageX - this.timeline.current.offsetLeft;
+    console.log(e.pageX);
+    if (handleLeft >= 0 && handleLeft <= timelineWidth) {
+      const newWidth = (handleLeft / timelineWidth) * 100;
+      this.props.moveLineTrack(newWidth);
+    }
+  };
+
   render() {
     const { songName, albumName, audio, currentTime, width } = this.props;
     const { duration } = audio;
@@ -54,7 +70,7 @@ export class DynamicPlayer extends React.Component {
             <div>{this.formatTime(currentTime)}</div>
             <div>{this.formatTime(duration)}</div>
           </NumberTrack>
-          <Time>
+          <Time ref={this.timeline} onClick={this.handleClick}>
             <LineTrack track={`${width}%`} />
           </Time>
         </InfoSong>
