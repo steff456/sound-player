@@ -31,13 +31,13 @@ export class DynamicPlayer extends React.Component {
   };
 
   static propTypes = {
-    songName: PropTypes.string.isRequired,
-    albumName: PropTypes.string.isRequired,
-    audio: PropTypes.object.isRequired,
+    songName: PropTypes.string,
+    albumName: PropTypes.string,
+    audio: PropTypes.object,
     currentTime: PropTypes.number,
     width: PropTypes.number,
-    moveLineTrack: PropTypes.func.isRequired,
-    height: PropTypes.string.isRequired,
+    moveLineTrack: PropTypes.func,
+    height: PropTypes.string,
     mouseTime: PropTypes.number,
     getMouseTime: PropTypes.func,
   };
@@ -101,9 +101,9 @@ export class DynamicPlayer extends React.Component {
       height,
       mouseTime,
     } = this.props;
-    const { duration } = audio;
     const { mouseWidth } = this.state;
     const style = { heigh: '100%', width: '100%' };
+    const duration = audio === undefined ? 0 : audio.duration;
     return (
       <DynamicContainer bottom={height}>
         <InfoSong>
