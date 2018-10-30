@@ -7,6 +7,8 @@
 import React from 'react';
 import axios from 'axios';
 
+import DynamicPlayer from './dynamicPlayer';
+
 import {
   Container,
   AlbumArt,
@@ -19,7 +21,6 @@ export class StaticPlayer extends React.Component {
   state = {
     listening: false,
     actSong: 0,
-    currentTime: 0,
   };
 
   albums = [
@@ -85,7 +86,6 @@ export class StaticPlayer extends React.Component {
         actSong: bef,
       });
     }
-    console.log(actSong);
   };
 
   next = () => {
@@ -104,23 +104,36 @@ export class StaticPlayer extends React.Component {
 
   render() {
     const { actSong, listening } = this.state;
+    const name = this.trackNames[actSong];
+    const album = this.albums[actSong];
+    const audio = this.trackUrl[actSong];
     return (
-      <Container>
-        <AlbumArt>
-          <AlbumCenter />
-          <img src={this.albumArtworks[actSong]} />
-        </AlbumArt>
-        <PlayerButtons className="d-flex justify-content-end">
-          <PlayerIcon name="backward" size="large" onClick={this.back} />
-          {!listening && (
-            <PlayerIcon name="play" size="large" onClick={this.playSong} />
-          )}
-          {listening && (
-            <PlayerIcon name="pause" size="large" onClick={this.stopSong} />
-          )}
-          <PlayerIcon name="forward" size="large" onClick={this.next} />
-        </PlayerButtons>
-      </Container>
+      <div>
+        {listening && (
+          <DynamicPlayer
+            songName={name}
+            albumName={album}
+            audio={audio}
+            listening={listening}
+          />
+        )}
+        <Container>
+          <AlbumArt>
+            <AlbumCenter />
+            <img src={this.albumArtworks[actSong]} alt="Album cover" />
+          </AlbumArt>
+          <PlayerButtons className="d-flex justify-content-end">
+            <PlayerIcon name="backward" size="large" onClick={this.back} />
+            {!listening && (
+              <PlayerIcon name="play" size="large" onClick={this.playSong} />
+            )}
+            {listening && (
+              <PlayerIcon name="pause" size="large" onClick={this.stopSong} />
+            )}
+            <PlayerIcon name="forward" size="large" onClick={this.next} />
+          </PlayerButtons>
+        </Container>
+      </div>
     );
   }
 }
