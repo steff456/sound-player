@@ -18,7 +18,7 @@ export const PlayerIcon = styled(Icon)`
 
 export const AlbumArt = styled.div`
   position: absolute;
-  top: -40px;
+  top: ${props => props.top};
   left: 40px;
   width: 115px;
   height: 115px;
@@ -26,9 +26,18 @@ export const AlbumArt = styled.div`
   -webkit-transform: rotateZ(0);
   transform: rotateZ(0);
   transition: 0.3s ease all;
-  box-shadow: 0 0 0 10px #fff;
+  box-shadow: 0 0 0 7px #fff;
   border-radius: 50%;
   overflow: hidden;
+  animation: ${props => props.animation};
+  @keyframes rotateAlbumArt {
+    0% {
+      transform: rotateZ(0);
+    }
+    100% {
+      transform: rotateZ(360deg);
+    }
+  }
 `;
 
 export const AlbumCenter = styled.div`
@@ -81,7 +90,7 @@ export const Time = styled.div`
 export const DynamicContainer = styled.div`
   height: 90px;
   position: absolute;
-  bottom: 100px;
+  bottom: ${props => props.bottom};
   width: 90%;
   background-color: ${props => props.theme.darkGrey};
   display: flex;
@@ -91,6 +100,7 @@ export const DynamicContainer = styled.div`
   margin: auto;
   left: 0;
   right: 0;
+  transition: 0.3s ease-in;
 `;
 
 export const SongName = styled.div`
@@ -133,4 +143,5 @@ export const LineTrack = styled.div`
   width: ${props => props.track};
   background-color: ${props => props.theme.secondaryColor};
   height: 8px;
+  transition: width 100ms ease-in-out;
 `;

@@ -136,20 +136,24 @@ export class StaticPlayer extends React.Component {
     const name = this.trackNames[actSong];
     const album = this.albums[actSong];
     const audio = this.trackUrl[actSong];
+    const rotate = listening
+      ? 'rotateAlbumArt 3s linear 0s infinite forwards'
+      : '';
+    const topAlbum = listening ? '-60px' : '-40px';
+    const bottomDynamic = listening ? '100px' : '0px';
     return (
       <div>
-        {listening && (
-          <DynamicPlayer
-            songName={name}
-            albumName={album}
-            audio={audio}
-            currentTime={currentTime}
-            width={width}
-            moveLineTrack={this.moveLineTrack}
-          />
-        )}
+        <DynamicPlayer
+          songName={name}
+          albumName={album}
+          audio={audio}
+          currentTime={currentTime}
+          width={width}
+          moveLineTrack={this.moveLineTrack}
+          height={bottomDynamic}
+        />
         <Container>
-          <AlbumArt>
+          <AlbumArt animation={rotate} top={topAlbum}>
             <AlbumCenter />
             <img src={this.albumArtworks[actSong]} alt="Album cover" />
           </AlbumArt>

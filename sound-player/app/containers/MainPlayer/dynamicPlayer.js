@@ -31,6 +31,7 @@ export class DynamicPlayer extends React.Component {
     currentTime: PropTypes.number,
     width: PropTypes.number,
     moveLineTrack: PropTypes.func.isRequired,
+    height: PropTypes.string.isRequired,
   };
 
   formatTime = timeSec => {
@@ -50,8 +51,10 @@ export class DynamicPlayer extends React.Component {
 
   handleClick = e => {
     const timelineWidth = this.timeline.current.offsetWidth;
-    const handleLeft = e.pageX - this.timeline.current.offsetLeft;
-    console.log(e.pageX);
+    const handleLeft =
+      e.pageX -
+      this.timeline.current.offsetLeft -
+      this.timeline.current.offsetParent.offsetLeft;
     if (handleLeft >= 0 && handleLeft <= timelineWidth) {
       const newWidth = (handleLeft / timelineWidth) * 100;
       this.props.moveLineTrack(newWidth);
@@ -59,10 +62,17 @@ export class DynamicPlayer extends React.Component {
   };
 
   render() {
-    const { songName, albumName, audio, currentTime, width } = this.props;
+    const {
+      songName,
+      albumName,
+      audio,
+      currentTime,
+      width,
+      height,
+    } = this.props;
     const { duration } = audio;
     return (
-      <DynamicContainer>
+      <DynamicContainer bottom={height}>
         <InfoSong>
           <SongName>{songName}</SongName>
           <AlbumName>{albumName}</AlbumName>
