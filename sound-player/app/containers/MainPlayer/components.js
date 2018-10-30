@@ -130,7 +130,7 @@ export const NumberTrack = styled.div`
 
 export const LineTrack = styled.div`
   display: flex;
-  width: 60%;
+  width: ${props => props.track};
   background-color: ${props => props.theme.secondaryColor};
   height: 8px;
 `;

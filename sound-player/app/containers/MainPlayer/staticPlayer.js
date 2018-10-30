@@ -21,6 +21,8 @@ export class StaticPlayer extends React.Component {
   state = {
     listening: false,
     actSong: 0,
+    currentTime: 0,
+    width: 0,
   };
 
   albums = [
@@ -59,15 +61,14 @@ export class StaticPlayer extends React.Component {
   ];
 
   playSong = () => {
-    const song = this.trackUrl[this.state.actSong];
-    song.play();
-    this.setState({
-      listening: true,
-    });
+    const { actSong } = this.state;
+    const song = this.trackUrl[actSong];
+    this.play(song);
   };
 
   stopSong = () => {
-    const song = this.trackUrl[this.state.actSong];
+    const { actSong } = this.state;
+    const song = this.trackUrl[actSong];
     song.pause();
     this.setState({
       listening: false,
@@ -80,7 +81,7 @@ export class StaticPlayer extends React.Component {
     const bef = actSong - 1;
     if (bef >= 0) {
       const song = this.trackUrl[bef];
-      song.play();
+      this.play(song);
       this.setState({
         listening: true,
         actSong: bef,
@@ -94,7 +95,7 @@ export class StaticPlayer extends React.Component {
     const next = actSong + 1;
     if (next < this.trackUrl.length) {
       const song = this.trackUrl[next];
-      song.play();
+      this.play(song);
       this.setState({
         listening: true,
         actSong: next,
@@ -102,8 +103,26 @@ export class StaticPlayer extends React.Component {
     }
   };
 
+  widthLineTrack = (currentTime, duration) => (currentTime / duration) * 100;
+
+  play = song => {
+    song.play();
+    this.setState({
+      listening: true,
+    });
+    song.addEventListener('timeupdate', () => {
+      const { currentTime, duration } = song;
+      const width = this.widthLineTrack(currentTime, duration);
+      console.log(width);
+      this.setState({
+        currentTime,
+        width,
+      });
+    });
+  };
+
   render() {
-    const { actSong, listening } = this.state;
+    const { actSong, listening, currentTime, width } = this.state;
     const name = this.trackNames[actSong];
     const album = this.albums[actSong];
     const audio = this.trackUrl[actSong];
@@ -114,7 +133,8 @@ export class StaticPlayer extends React.Component {
             songName={name}
             albumName={album}
             audio={audio}
-            listening={listening}
+            currentTime={currentTime}
+            width={width}
           />
         )}
         <Container>

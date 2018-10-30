@@ -16,21 +16,15 @@ import {
   Time,
   LineTrack,
 } from './components';
+
 /* eslint-disable react/prefer-stateless-function */
 export class DynamicPlayer extends React.Component {
   static propTypes = {
     songName: PropTypes.string.isRequired,
     albumName: PropTypes.string.isRequired,
     audio: PropTypes.object.isRequired,
-    listening: PropTypes.bool.isRequired,
-  };
-
-  state = {
-    currentTime: 0,
-  };
-
-  getTime = () => {
-    const { audio, listening } = this.props;
+    currentTime: PropTypes.number,
+    width: PropTypes.number,
   };
 
   formatTime = timeSec => {
@@ -49,18 +43,19 @@ export class DynamicPlayer extends React.Component {
   };
 
   render() {
-    const { songName, albumName, audio } = this.props;
+    const { songName, albumName, audio, currentTime, width } = this.props;
+    const { duration } = audio;
     return (
       <DynamicContainer>
         <InfoSong>
           <SongName>{songName}</SongName>
           <AlbumName>{albumName}</AlbumName>
           <NumberTrack>
-            <div>0:00</div>
-            <div>{this.formatTime(audio.duration)}</div>
+            <div>{this.formatTime(currentTime)}</div>
+            <div>{this.formatTime(duration)}</div>
           </NumberTrack>
           <Time>
-            <LineTrack />
+            <LineTrack track={`${width}%`} />
           </Time>
         </InfoSong>
       </DynamicContainer>
